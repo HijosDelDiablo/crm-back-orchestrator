@@ -2,9 +2,10 @@
 /dist
 /node_modules
 /build
-
+redis
 # Logs
 logs
+.env*
 *.log
 npm-debug.log*
 pnpm-debug.log*
