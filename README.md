@@ -1,98 +1,187 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# CRM Back Orchestrator
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Sistema backend para gestión de CRM construido con NestJS, desplegado en Railway con CI/CD automático.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Características
 
-## Description
+- **Framework**: NestJS con TypeScript
+- **Base de datos**: Redis para cache y sesiones
+- **Deployment**: Railway con CI/CD automático
+- **Containerización**: Docker multi-stage optimizado
+- **Testing**: Jest para pruebas unitarias y e2e
+- **Linting**: ESLint + Prettier
+- **DevOps**: GitHub Actions para CI/CD
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 📋 Requisitos Previos
 
-## Project setup
+- Node.js 20.x
+- Yarn
+- Docker (opcional para desarrollo local)
+- Cuenta en Railway
+- Cuenta en GitHub
+
+## 🛠️ Instalación Local
 
 ```bash
-$ yarn install
+# Clonar repositorio
+git clone <repository-url>
+cd crm-back-orchestrator
+
+# Instalar dependencias
+yarn install
+
+# Copiar variables de entorno
+cp .env.example .env
+
+# Ejecutar en modo desarrollo
+yarn start:dev
 ```
 
-## Compile and run the project
+## 🔧 Scripts Disponibles
 
 ```bash
-# development
-$ yarn run start
+# Desarrollo
+yarn start:dev          # Servidor con hot reload
+yarn start:debug        # Servidor con debugging
 
-# watch mode
-$ yarn run start:dev
+# Construcción y producción
+yarn build              # Construir aplicación
+yarn start:prod         # Ejecutar versión de producción
 
-# production mode
-$ yarn run start:prod
+# Testing
+yarn test               # Tests unitarios
+yarn test:e2e          # Tests end-to-end
+yarn test:cov          # Coverage de tests
+
+# Verificación
+yarn verify:build      # Verificar build básico
+yarn verify:build:full # Verificación completa (Linux/Mac)
+yarn verify:build:win  # Verificación completa (Windows)
+
+# Calidad de código
+yarn lint              # Ejecutar linter
+yarn format            # Formatear código
 ```
 
-## Run tests
+## 🐳 Docker
+
+### Desarrollo
 
 ```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+# Usar Docker Compose para desarrollo
+docker-compose up
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### Producción
 
 ```bash
-$ yarn install -g @nestjs/mau
-$ mau deploy
+# Construir imagen de producción
+docker build -f Dockerfile.prod -t crm-back-orchestrator .
+
+# Ejecutar contenedor
+docker run -p 3000:3000 crm-back-orchestrator
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## 🚀 Deployment en Railway
 
-## Resources
+### Configuración Inicial
 
-Check out a few resources that may come in handy when working with NestJS:
+1. **Conectar repositorio con Railway**
+   - Crear proyecto en Railway
+   - Conectar con repositorio GitHub
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+2. **Configurar variables de entorno en Railway**
+   ```
+   NODE_ENV=production
+   PORT=3000
+   ```
 
-## Support
+3. **Agregar Redis como servicio**
+   - Agregar servicio Redis en Railway
+   - Railway automáticamente configurará REDIS_URL
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### CI/CD Automático
 
-## Stay in touch
+El proyecto incluye GitHub Actions que:
+- ✅ Ejecuta tests en cada push/PR
+- ✅ Verifica que el build sea exitoso
+- ✅ Despliega automáticamente a Railway en pushes a `main`
+- ✅ Notifica resultado del deployment
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Configurar Secretos en GitHub
 
-## License
+1. Ve a Settings → Secrets and Variables → Actions
+2. Agrega estos secretos:
+   - `RAILWAY_TOKEN`: Token de Railway API
+   - `RAILWAY_SERVICE_ID`: ID del servicio en Railway
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## 📊 Monitoreo y Verificación
+
+### Verificar Build Local
+
+```bash
+# Verificación rápida
+yarn verify:build
+
+# Verificación completa
+yarn verify:build:full  # Linux/Mac
+yarn verify:build:win   # Windows
+```
+
+### Verificar Deployment
+
+1. **Logs de Railway**: Ve a tu proyecto en Railway → Deployments
+2. **GitHub Actions**: Ve a Actions tab en tu repositorio
+3. **Health Check**: Railway automáticamente verifica que tu app responda
+
+## 📁 Estructura del Proyecto
+
+```
+crm-back-orchestrator/
+├── .github/workflows/     # CI/CD workflows
+├── scripts/              # Scripts de verificación
+├── src/                  # Código fuente
+├── Dockerfile           # Docker para desarrollo
+├── Dockerfile.prod      # Docker optimizado para producción
+├── railway.json         # Configuración de Railway
+└── docker-compose.yaml  # Compose para desarrollo local
+```
+
+## 🔄 Flujo SCRUM + DevOps
+
+### Ramas y Workflow
+
+1. **Feature branches**: `feature/nombre-feature`
+2. **Pull requests**: Siempre crear PR para merge a `main`
+3. **CI/CD**: Automático en merge a `main`
+
+### Sprint Workflow
+
+1. **Planning**: Definir features del sprint
+2. **Development**: Desarrollar en feature branches
+3. **Testing**: CI automático en cada PR
+4. **Review**: Code review obligatorio
+5. **Deploy**: Automático al merge a `main`
+6. **Monitor**: Verificar deployment en Railway
+
+## 🛡️ Variables de Entorno
+
+Copia `.env.example` a `.env` y configura:
+
+```env
+NODE_ENV=development
+PORT=3000
+REDIS_URL=redis://localhost:6379
+```
+
+## 📝 Contribución
+
+1. Fork el proyecto
+2. Crear feature branch (`git checkout -b feature/nueva-feature`)
+3. Commit cambios (`git commit -am 'Agregar nueva feature'`)
+4. Push a branch (`git push origin feature/nueva-feature`)
+5. Crear Pull Request
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT.
