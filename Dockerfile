@@ -1,15 +1,46 @@
-FROM node:20-alpine AS base
+# Multi-stage build para optimizar el tamaño de la imagen
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-COPY package*.json yarn.lock ./
+# Copiar archivos de dependencias
+COPY package.json yarn.lock ./
 
-RUN yarn config set registry http://registry.npmmirror.com/ && \
-    yarn install --network-timeout 300000
-RUN yarn global add nodemon @nestjs/cli
+# Instalar dependencias
+RUN yarn install --frozen-lockfile --production=false
 
+# Copiar código fuente
 COPY . .
 
-EXPOSE 8000
+# Construir la aplicación
+RUN yarn build
 
-CMD [ "nest", "start" ,"--watch" ]
+# Etapa de producción
+FROM node:20-alpine AS production
+
+WORKDIR /app
+
+# Crear usuario no-root por seguridad
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nestjs -u 1001
+
+# Copiar package.json y yarn.lock
+COPY package.json yarn.lock ./
+
+# Instalar solo dependencias de producción
+RUN yarn install --frozen-lockfile --production=true && yarn cache clean
+
+# Copiar el build desde la etapa anterior
+COPY --from=builder --chown=nestjs:nodejs /app/dist ./dist
+
+# Cambiar al usuario no-root
+USER nestjs
+
+# Exponer puerto
+EXPOSE $PORT
+
+# Variables de entorno por defecto
+ENV NODE_ENV=production
+
+# Comando para iniciar la aplicación
+CMD ["node", "dist/main.js"]

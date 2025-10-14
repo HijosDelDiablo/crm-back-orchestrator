@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { WebhooksController } from './webhooks/webhooks.controller';
-import { TeamsService } from './services/teams.service';
 
 @Module({
   imports: [
@@ -12,7 +10,7 @@ import { TeamsService } from './services/teams.service';
       envFilePath: '.env',
     }),
   ],
-  controllers: [AppController, WebhooksController],
-  providers: [AppService, TeamsService],
+  controllers: [AppController, ],
+  providers: [AppService,],
 })
 export class AppModule {}
