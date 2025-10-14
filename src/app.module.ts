@@ -10,8 +10,8 @@ import { AppService } from './app.service';
       envFilePath: '.env',
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, ],
+  providers: [AppService,],
 })
 
 export class AppModule {}
