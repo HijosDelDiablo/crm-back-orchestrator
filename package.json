@@ -17,7 +17,14 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "prebuild": "rimraf dist",
+    "postbuild": "echo 'Build completed successfully'",
+    "railway:build": "yarn install --frozen-lockfile && yarn build",
+    "railway:start": "node dist/main.js",
+    "verify:build": "node -e \"console.log('Verificando build...'); const fs = require('fs'); if (!fs.existsSync('dist/main.js')) { console.error('❌ Build falló: main.js no encontrado'); process.exit(1); } console.log('✅ Build verificado');\"",
+    "verify:build:full": "bash scripts/verify-build.sh",
+    "verify:build:win": "scripts\\verify-build.bat"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
