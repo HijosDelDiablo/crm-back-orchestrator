@@ -11,6 +11,7 @@ Sistema backend para gestión de CRM construido con NestJS, desplegado en Railwa
 
 
 
+
 - **Framework**: NestJS con TypeScript
 - **Base de datos**: Redis para cache y sesiones
 - **Deployment**: Railway con CI/CD automático
