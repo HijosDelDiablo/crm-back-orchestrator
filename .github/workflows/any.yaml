@@ -1,0 +1,11 @@
+name: CI
+"on":
+    push:
+        branches: ["feat/api-clients"]
+    workflow_dispatch:
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: "Mostrar mensaje de bienvenida"
+              run: echo "¡Hola! Este es un flujo de trabajo de CI ejecutándose en GitHub Actions."

@@ -4,7 +4,7 @@
 /build
 redis
 # Logs
-.git*
+.git/
 logs
 .env*
 *.log
