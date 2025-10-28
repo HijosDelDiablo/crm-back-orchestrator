@@ -1,21 +1,24 @@
 services:
-  # name the service
   crm-back-orchestrator:
-    build: 
+    build:
       context: .
-      dockerfile: ${DOCKERFILE}
+      dockerfile: Dockerfile.dev
     image: ${IMAGE_NAME}
     container_name: ${IMAGE_NAME}
     ports:
       - "${PORT}:${PORT}"
-    
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - ${VOLUME_LOCAL}:${VOLUME_INTERNAL}
-      - ${VOLUME_NODE_MODULES_LOCAL}:${VOLUME_NODE_MODULES_INTERNAL}
     command: >
-      sh -c "nodemon --watch package.json --watch yarn.lock --watch node_modules --exec 'yarn install && nest start --watch'"
+      sh -c "nodemon --watch package.json --watch yarn.lock --watch node_modules --exec 'nest start --watch'"
     networks:
-      - app-net
+      - app_sba_net
   redis_crm_back_orchestrator:
     image: ${REDIS_IMAGE}
     ports:
@@ -30,10 +33,10 @@ services:
       retries: 5
       start_period: 10s
     networks:
-      - app-net
+      - app_sba_net
     container_name: ${REDIS_CONTAINER_NAME}
 
 networks:
-  app-net:
+  app_sba_net:
     name: ${APP_NETWORK}
     external: true

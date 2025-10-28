@@ -1,18 +1,16 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-export type CustomerDocument = Customer & Document;
-
-@Schema({ timestamps: true })
+@Entity('customer')
 export class Customer {
-  @Prop({ required: true })
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ type: 'varchar', length: 255 })
   nombre: string;
 
-  @Prop()
+  @Column({ type: 'varchar', length: 255, nullable: true })
   email?: string;
 
-  @Prop({ required: true, enum: ['activo', 'prospecto', 'inactivo'], default: 'prospecto' })
+  @Column({ type: 'varchar', length: 20, default: 'prospecto' })
   estado: string;
 }
-
-export const CustomerSchema = SchemaFactory.createForClass(Customer);

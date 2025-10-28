@@ -14,33 +14,3 @@ COPY . .
 
 # Construir la aplicación
 RUN yarn build
-
-# Etapa de producción
-FROM node:20-alpine AS production
-
-WORKDIR /app
-
-# Crear usuario no-root por seguridad
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nestjs -u 1001
-
-# Copiar package.json y yarn.lock
-COPY package.json yarn.lock ./
-
-# Instalar solo dependencias de producción
-RUN yarn install --frozen-lockfile --production=true && yarn cache clean
-
-# Copiar el build desde la etapa anterior
-COPY --from=builder --chown=nestjs:nodejs /app/dist ./dist
-
-# Cambiar al usuario no-root
-USER nestjs
-
-# Exponer puerto
-EXPOSE $PORT
-
-# Variables de entorno por defecto
-ENV NODE_ENV=production
-
-# Comando para iniciar la aplicación
-CMD ["node", "dist/main.js"]

@@ -18,14 +18,13 @@ export class CustomerController {
   @Get('health')
   async healthCheck() {
     try {
-      // Verificar conexión a MongoDB
+      // Verificar conexión a PostgreSQL
       await this.customersService.checkConnection();
-      
       return {
         status: 'healthy',
         timestamp: new Date().toISOString(),
         services: {
-          mongodb: 'connected'
+          postgresql: 'connected'
         }
       };
     } catch (error) {

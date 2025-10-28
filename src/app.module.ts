@@ -2,12 +2,22 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MongooseModule } from '@nestjs/mongoose';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Customer } from './models/customer.model';
+
 
 @Module({
   imports: [
-      MongooseModule.forRoot(process.env.MONGO_URI || 
-        'mongodb://crm_admin:crm_pass@localhost:27017/crm_db?authSource=admin'),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.POSTGRES_HOST,
+      port: parseInt(process.env.POSTGRES_PORT || '5432', 10),
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DB,
+      entities: [Customer],
+      synchronize: true, // Solo para desarrollo
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
